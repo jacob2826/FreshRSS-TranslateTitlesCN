@@ -1,0 +1,46 @@
+<form action="<?php echo _url('extension', 'configure', 'e', urlencode($this->getName())); ?>" method="post">
+    <input type="hidden" name="_csrf" value="<?php echo FreshRSS_Auth::csrfToken(); ?>" />
+    <!-- 翻译服务选择 -->
+    <div class="form-group">
+        <label class="group-name">选择翻译服务:</label>
+        <div class="group-controls">
+            <div class="form-group">
+                <input type="radio" id="translate-service-deeplx" name="TranslateService" value="deeplx" required <?php echo (FreshRSS_Context::$user_conf->TranslateService == 'deeplx' ? 'checked' : ''); ?>>
+                <span for="translate-service-deeplx">DeepLX</span>
+            </div>
+            <div class="form-group">
+                <input type="radio" id="translate-service-google" name="TranslateService" value="google" <?php echo (FreshRSS_Context::$user_conf->TranslateService == 'google' ? 'checked' : ''); ?>>
+                <span for="translate-service-google">谷歌翻译</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- DeepLX API URL 设置 -->
+    <div class="form-group">
+        <label class="group-name" for="deeplx-api-url">DeepLX API地址:</label>
+        <div class="group-controls">
+            <input id="deeplx-api-url" required="required" name="DeeplxApiUrl" type="text" value="<?php echo FreshRSS_Context::$user_conf->DeeplxApiUrl; ?>">
+        </div>
+    </div>
+
+    <!-- 订阅源翻译设置 -->
+    <div class="form-group">
+        <label class="group-name">订阅源翻译设置:</label>
+        <div class="group-controls">
+            <?php foreach (FreshRSS_Factory::createFeedDao()->listFeeds() as $id => $feed): ?>
+            <li class="form-group">
+                <span class="feed-name"><?php echo $feed->name(); ?></span>
+                <input type="checkbox" id="feed-<?php echo $id; ?>" name="TranslateTitles[<?php echo $id; ?>]" value="1" <?php if (isset(FreshRSS_Context::$user_conf->TranslateTitles[$id]) && FreshRSS_Context::$user_conf->TranslateTitles[$id] == '1') echo ' checked="checked"'; ?>>
+            </li>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- 提交与取消按钮 -->
+    <div class="form-group form-actions">
+        <div class="group-controls">
+            <button type="submit" class="btn btn-important"><?php echo _t('gen.action.submit'); ?></button>
+            <button type="reset" class="btn"><?php echo _t('gen.action.cancel'); ?></button>
+        </div>
+    </div>
+</form>

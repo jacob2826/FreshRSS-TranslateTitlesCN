@@ -1,0 +1,9 @@
+{
+    "name": "TranslateTitlesCN",
+    "version": "0.2",
+    "description": "Translate article titles using DeepLX or Google Translate.",
+    "author": "jacob2826",
+    "website": "https://github.com/jacob2826/FreshRSS-TranslateTitlesCN",
+    "entrypoint": "TranslateTitles",
+    "type": "user"
+}
