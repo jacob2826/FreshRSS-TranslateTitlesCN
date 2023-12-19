@@ -4,6 +4,12 @@
 
 > **声明**: 本项目在开发过程中大量使用了 [ChatGPT](https://chat.openai.com/)，特此对 [OpenAI](https://openai.com) 表示感谢。
 
+## 参考图
+
+<img src="https://github.com/jacob2826/FreshRSS-TranslateTitlesCN/blob/main/screenshot-20231219-142233.png" width="300px"/>
+
+<img src="https://github.com/jacob2826/FreshRSS-TranslateTitlesCN/blob/main/screenshot-20231219-142310.png" width="300px"/>
+
 ## 安装方法
 
 1. 下载 `TranslateTitlesCN` 插件。
