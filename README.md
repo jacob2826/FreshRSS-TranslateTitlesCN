@@ -23,7 +23,9 @@
 安装并启用插件后，进入插件的配置页面进行相关设置。在这里，您可以：
 
 - **选择翻译服务**：您可以选择 DeeplX 或谷歌翻译作为翻译服务提供者。
-  - **DeeplX**：使用 DeeplX 服务进行翻译时，您需要部署 [DeeplX](https://github.com/OwO-Network/DeepLX/) 项目，并在插件配置中提供 DeeplX API 地址。默认地址为 `http://localhost:1188/translate`。
+  - **DeeplX**：使用 DeeplX 服务进行翻译时，
+    - 您可以选择部署 [DeeplX](https://github.com/OwO-Network/DeepLX/) 项目，并在插件配置中提供 DeeplX API 地址。默认地址为 `http://localhost:1188/translate`。
+    - 或您可以使用其他人已部署好的 DeeplX 服务的 API 地址，如 `https://api.deeplx.fun/translate`。
   - **谷歌翻译**：选择谷歌翻译服务不需要额外配置。
 - **为每个订阅源单独启用或禁用翻译功能**：您可以控制哪些订阅源的标题需要被翻译。
 
