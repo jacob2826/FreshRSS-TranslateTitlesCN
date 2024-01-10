@@ -27,12 +27,18 @@
     <div class="form-group">
         <label class="group-name">订阅源翻译设置:</label>
         <div class="group-controls">
-            <?php foreach (FreshRSS_Factory::createFeedDao()->listFeeds() as $id => $feed): ?>
-            <li class="form-group">
-                <span class="feed-name"><?php echo $feed->name(); ?></span>
-                <input type="checkbox" id="feed-<?php echo $id; ?>" name="TranslateTitles[<?php echo $id; ?>]" value="1" <?php if (isset(FreshRSS_Context::$user_conf->TranslateTitles[$id]) && FreshRSS_Context::$user_conf->TranslateTitles[$id] == '1') echo ' checked="checked"'; ?>>
-            </li>
-            <?php endforeach; ?>
+            <?php 
+            $feeds = FreshRSS_Factory::createFeedDao()->listFeeds();
+            if (empty($feeds)): ?>
+                <span>暂无订阅源，请添加后重试</span>
+            <?php else: ?>
+                <?php foreach ($feeds as $id => $feed): ?>
+                <li class="form-group">
+                    <span class="feed-name"><?php echo $feed->name(); ?></span>
+                    <input type="checkbox" id="feed-<?php echo $id; ?>" name="TranslateTitles[<?php echo $id; ?>]" value="1" <?php if (isset(FreshRSS_Context::$user_conf->TranslateTitles[$id]) && FreshRSS_Context::$user_conf->TranslateTitles[$id] == '1') echo ' checked="checked"'; ?>>
+                </li>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 

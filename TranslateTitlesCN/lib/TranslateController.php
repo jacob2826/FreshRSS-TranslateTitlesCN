@@ -9,6 +9,8 @@ class TranslateController {
         $attempts = 0;
         $sleepTime = 1; // 初始等待时间
 
+        error_log("Service: " . $serviceType . ", Title: " . $title);
+
         while ($attempts < 2) {
             try {
                 $translatedTitle = $translationService->translate($title);

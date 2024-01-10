@@ -54,7 +54,6 @@ class TranslateTitlesExtension extends Minz_Extension {
         $feedId = $entry->feed()->id();
         if (isset(FreshRSS_Context::$user_conf->TranslateTitles[$feedId]) && FreshRSS_Context::$user_conf->TranslateTitles[$feedId] == '1') {
             $title = $entry->title();
-            error_log("translating: " . $title);
             $translateController = new TranslateController();
             $translatedTitle = $translateController->translateTitle($title);
             if (!empty($translatedTitle)) {
