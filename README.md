@@ -39,6 +39,8 @@
 
 如果您对 `TranslateTitlesCN` 有任何改进建议或想要贡献代码，请通过 GitHub 仓库提交 Pull Request 或 Issue。
 
+您也可以 [赞助开发者(爱发电)](https://afdian.net/a/jacob2826) ，您的名字将会出现在赞助者列表中。
+
 ## 许可
 
 该项目根据 [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) 开源。
