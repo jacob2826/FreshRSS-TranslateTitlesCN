@@ -6,9 +6,9 @@
 
 ## 参考图
 
-<img src="https://github.com/yarin-zhang/FreshRSS-TranslateTitlesCN/blob/main/screenshot-20241115-214506.png" width="300px"/>
+<img src="https://github.com/yarin-zhang/FreshRSS-TranslateTitlesCN/blob/main/img/screenshot-20241115-214506.png" width="300px"/>
 
-<img src="https://github.com/yarin-zhang/FreshRSS-TranslateTitlesCN/blob/main/screenshot-20241115-215959.png" width="300px"/>
+<img src="https://github.com/yarin-zhang/FreshRSS-TranslateTitlesCN/blob/main/img/screenshot-20241115-215959.png" width="300px"/>
 
 ## 安装方法
 
