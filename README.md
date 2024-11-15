@@ -1,12 +1,12 @@
 # TranslateTitlesCN
 
-`TranslateTitlesCN` 是一个为 [FreshRSS](https://github.com/FreshRSS/FreshRSS) 开发的插件，它能够将指定订阅源中的文章标题翻译成中文。用户可以选择使用 DeeplX 或谷歌翻译服务来完成翻译。
+`TranslateTitlesCN` 是一个为 [FreshRSS](https://github.com/FreshRSS/FreshRSS) 开发的插件，它能够将指定订阅源中的文章标题翻译成中文。用户可以选择使用 DeeplX、谷歌翻译或 LibreTranslate 服务来完成翻译。
 
 > **声明**: 本项目在开发过程中大量使用了 [ChatGPT](https://chat.openai.com/)，特此对 [OpenAI](https://openai.com) 表示感谢。
 
 ## 参考图
 
-<img src="https://github.com/jacob2826/FreshRSS-TranslateTitlesCN/blob/main/screenshot-20231219-142233.png" width="300px"/>
+<img src="https://github.com/jacob2826/FreshRSS-TranslateTitlesCN/blob/main/screenshot-20241115-214506.png" width="300px"/>
 
 <img src="https://github.com/jacob2826/FreshRSS-TranslateTitlesCN/blob/main/screenshot-20231219-142310.png" width="300px"/>
 
@@ -22,11 +22,17 @@
 
 安装并启用插件后，进入插件的配置页面进行相关设置。在这里，您可以：
 
-- **选择翻译服务**：您可以选择 DeeplX 或谷歌翻译作为翻译服务提供者。
+- **选择翻译服务**：您可以选择 DeeplX、谷歌翻译或 LibreTranslate 作为翻译服务提供者。
   - **DeeplX**：使用 DeeplX 服务进行翻译时，
     - 您可以选择部署 [DeeplX](https://github.com/OwO-Network/DeepLX/) 项目，并在插件配置中提供 DeeplX API 地址。默认地址为 `http://localhost:1188/translate`。
     - 或您可以使用其他人已部署好的 DeeplX 服务的 API 地址，如 `https://api.deeplx.fun/translate`。
   - **谷歌翻译**：选择谷歌翻译服务不需要额外配置。
+  - **LibreTranslate**：使用 LibreTranslate 服务时，
+    - 您可以自行部署 [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) 服务，这是一个开源的离线翻译服务，可以有效避免网络不佳导致无法翻译的情况。
+    - 您也可以选择使用别人部署好的公共实例。
+    - 需要在插件配置中设置 LibreTranslate 服务器地址，例如 `https://libretranslate.com/`。
+    - 如果您的 LibreTranslate 服务器需要 API Key，请在配置中填写。
+    - 公共实例列表可参考：[LibreTranslate 公共实例](https://github.com/LibreTranslate/LibreTranslate#mirrors)
 - **为每个订阅源单独启用或禁用翻译功能**：您可以控制哪些订阅源的标题需要被翻译。
 
 ## 注意事项

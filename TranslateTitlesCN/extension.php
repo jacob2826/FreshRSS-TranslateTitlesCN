@@ -6,18 +6,30 @@ class TranslateTitlesExtension extends Minz_Extension {
     private const ApiUrl = 'http://localhost:1188/translate';
 
     public function init() {
+        if (!extension_loaded('mbstring')) {
+            error_log('TranslateTitlesCN 插件需要 PHP mbstring 扩展支持');
+        }
+        
         $this->registerHook('feed_before_insert', array($this, 'addTranslationOption'));
         $this->registerHook('entry_before_insert', array($this, 'translateTitle'));
 
         if (is_null(FreshRSS_Context::$user_conf->TranslateService)) {
             FreshRSS_Context::$user_conf->TranslateService = 'google';
-            FreshRSS_Context::$user_conf->save();
         }
 
         if (is_null(FreshRSS_Context::$user_conf->DeeplxApiUrl)) {
             FreshRSS_Context::$user_conf->DeeplxApiUrl = self::ApiUrl;
-            FreshRSS_Context::$user_conf->save();
         }
+
+        if (is_null(FreshRSS_Context::$user_conf->LibreApiUrl)) {
+            FreshRSS_Context::$user_conf->LibreApiUrl = 'http://localhost:5000';
+        }
+
+        if (is_null(FreshRSS_Context::$user_conf->LibreApiKey)) {
+            FreshRSS_Context::$user_conf->LibreApiKey = '';
+        }
+
+        FreshRSS_Context::$user_conf->save();
     }
 
     public function handleConfigureAction() {
@@ -30,6 +42,12 @@ class TranslateTitlesExtension extends Minz_Extension {
 
             $deeplxApiUrl = Minz_Request::param('DeeplxApiUrl', self::ApiUrl);
             FreshRSS_Context::$user_conf->DeeplxApiUrl = $deeplxApiUrl;
+
+            $libreApiUrl = Minz_Request::param('LibreApiUrl', 'http://localhost:5000');
+            FreshRSS_Context::$user_conf->LibreApiUrl = $libreApiUrl;
+
+            $libreApiKey = Minz_Request::param('LibreApiKey', '');
+            FreshRSS_Context::$user_conf->LibreApiKey = $libreApiKey;
 
             FreshRSS_Context::$user_conf->save();
         }
@@ -45,6 +63,12 @@ class TranslateTitlesExtension extends Minz_Extension {
         }
         if (isset(FreshRSS_Context::$user_conf->DeeplxApiUrl)) {
             unset(FreshRSS_Context::$user_conf->DeeplxApiUrl);
+        }
+        if (isset(FreshRSS_Context::$user_conf->LibreApiUrl)) {
+            unset(FreshRSS_Context::$user_conf->LibreApiUrl);
+        }
+        if (isset(FreshRSS_Context::$user_conf->LibreApiKey)) {
+            unset(FreshRSS_Context::$user_conf->LibreApiKey);
         }
         FreshRSS_Context::$user_conf->save();
     }
@@ -66,5 +90,41 @@ class TranslateTitlesExtension extends Minz_Extension {
     public function addTranslationOption($feed) {
         $feed->TranslateTitles = '0';
         return $feed;
+    }
+
+    public function handleTestAction() {
+        header('Content-Type: application/json');
+        
+        $text = Minz_Request::param('test-text', '');
+        if (empty($text)) {
+            return $this->view->_error(404);
+        }
+
+        try {
+            $serviceType = FreshRSS_Context::$user_conf->TranslateService ?? 'google';
+            $translationService = new TranslationService($serviceType);
+            $translatedText = $translationService->translate($text);
+
+            if (!empty($translatedText)) {
+                // 返回成功页面
+                $this->view->_path('configure');
+                $this->view->testResult = [
+                    'success' => true,
+                    'message' => $translatedText
+                ];
+            } else {
+                $this->view->_path('configure');
+                $this->view->testResult = [
+                    'success' => false,
+                    'message' => '翻译失败'
+                ];
+            }
+        } catch (Exception $e) {
+            $this->view->_path('configure');
+            $this->view->testResult = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
+        }
     }
 }
