@@ -41,11 +41,14 @@
 - 为防止频繁请求 DeeplX 导致 IP 被封禁，请谨慎使用。
 - 本插件仅适用于 FreshRSS，确保您的 FreshRSS 版本与插件兼容。
 
+## 相关教程
+
+- [如何通过 Docker 部署 FreshRSS 服务，实现 RSS 自由](https://utgd.net/article/20972)
+- [FreshRSS 插件配合 LibreTranslate 实现纯本地的 RSS 标题翻译](https://utgd.net/article/20973)
+
 ## 贡献
 
 如果您对 `TranslateTitlesCN` 有任何改进建议或想要贡献代码，请通过 GitHub 仓库提交 Pull Request 或 Issue。
-
-您也可以 [赞助开发者(爱发电)](https://afdian.net/a/jacob2826) ，您的名字将会出现在赞助者列表中。
 
 ## 许可
 
