@@ -2,7 +2,10 @@
 
 `TranslateTitlesCN` 是一个为 [FreshRSS](https://github.com/FreshRSS/FreshRSS) 开发的插件，它能够将指定订阅源中的文章标题翻译成中文。用户可以选择使用 DeeplX、谷歌翻译或 LibreTranslate 服务来完成翻译。
 
-原项目：[TranslateTitlesCN](https://github.com/jacob2826/FreshRSS-TranslateTitlesCN)，我在此基础上添加了 LibreTranslate 翻译服务。
+原项目：[TranslateTitlesCN](https://github.com/jacob2826/FreshRSS-TranslateTitlesCN)，我在此基础上添加了以下功能：
+
+- 现在支持 LibreTranslate 翻译服务。
+- 修复了自动刷新时无法翻译的问题。
 
 ## 参考图
 
