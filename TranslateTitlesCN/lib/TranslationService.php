@@ -3,18 +3,106 @@ class TranslationService {
     private $serviceType;
     private $deeplxBaseUrl;
     private $googleBaseUrl;
+    private $libreBaseUrl;
+    private $libreApiKey;
 
     public function __construct($serviceType) {
         $this->serviceType = $serviceType;
-        $this->deeplxBaseUrl = FreshRSS_Context::$user_conf->DeeplxApiUrl; // DeeplX API URL
-        $this->googleBaseUrl = 'https://translate.googleapis.com/translate_a/single'; // 谷歌翻译API的URL
+        $this->deeplxBaseUrl = FreshRSS_Context::$user_conf->DeeplxApiUrl;
+        $this->googleBaseUrl = 'https://translate.googleapis.com/translate_a/single';
+        $this->libreBaseUrl = FreshRSS_Context::$user_conf->LibreApiUrl;
+        $this->libreApiKey = FreshRSS_Context::$user_conf->LibreApiKey;
     }
 
     public function translate($text) {
-        if ($this->serviceType == 'deeplx') {
-            return $this->translateWithDeeplx($text);
-        } else {
-            return $this->translateWithGoogle($text);
+        switch ($this->serviceType) {
+            case 'deeplx':
+                return $this->translateWithDeeplx($text);
+            case 'libre':
+                return $this->translateWithLibre($text);
+            default:
+                return $this->translateWithGoogle($text);
+        }
+    }
+
+    private function translateWithLibre($text) {
+        if (empty($text)) {
+            return '';
+        }
+
+        // 确保 API URL 末尾没有斜杠
+        $apiUrl = rtrim($this->libreBaseUrl, '/') . '/translate';
+        
+        $postData = array(
+            'q' => $text,
+            'source' => 'auto',
+            'target' => 'zh',
+            'format' => 'text'
+        );
+        
+        if (!empty($this->libreApiKey)) {
+            $postData['api_key'] = $this->libreApiKey;
+        }
+
+        $jsonData = json_encode($postData);
+        
+        // 记录请求信息用于调试
+        error_log("LibreTranslate Request URL: " . $apiUrl);
+        error_log("LibreTranslate Request Data: " . $jsonData);
+
+        $options = array(
+            'http' => array(
+                'header' => array(
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($jsonData)
+                ),
+                'method' => 'POST',
+                'content' => $jsonData,
+                'timeout' => 10,
+                'ignore_errors' => true // 允许获取错误响应
+            ),
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+
+        $context = stream_context_create($options);
+
+        try {
+            $result = @file_get_contents($apiUrl, false, $context);
+            
+            // 获取响应头信息
+            $responseHeaders = $http_response_header ?? array();
+            $statusLine = $responseHeaders[0] ?? '';
+            error_log("LibreTranslate Response Status: " . $statusLine);
+            
+            if ($result === FALSE) {
+                error_log("LibreTranslate API request failed - No Response");
+                return $text;
+            }
+
+            error_log("LibreTranslate Raw Response: " . $result);
+            
+            $response = json_decode($result, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                error_log("LibreTranslate JSON decode error: " . json_last_error_msg());
+                return $text;
+            }
+
+            if (isset($response['translatedText'])) {
+                return mb_convert_encoding($response['translatedText'], 'UTF-8', 'UTF-8');
+            } else if (isset($response['error'])) {
+                error_log("LibreTranslate API error: " . $response['error']);
+                return $text;
+            } else {
+                error_log("LibreTranslate API unexpected response structure: " . print_r($response, true));
+                return $text;
+            }
+        } catch (Exception $e) {
+            error_log("LibreTranslate exception: " . $e->getMessage());
+            return $text;
         }
     }
 

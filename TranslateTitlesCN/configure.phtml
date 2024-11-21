@@ -12,6 +12,10 @@
                 <input type="radio" id="translate-service-google" name="TranslateService" value="google" <?php echo (FreshRSS_Context::$user_conf->TranslateService == 'google' ? 'checked' : ''); ?>>
                 <span for="translate-service-google">谷歌翻译</span>
             </div>
+            <div class="form-group">
+                <input type="radio" id="translate-service-libre" name="TranslateService" value="libre" <?php echo (FreshRSS_Context::$user_conf->TranslateService == 'libre' ? 'checked' : ''); ?>>
+                <span for="translate-service-libre">LibreTranslate</span>
+            </div>
         </div>
     </div>
 
@@ -19,7 +23,21 @@
     <div class="form-group">
         <label class="group-name" for="deeplx-api-url">DeepLX API地址:</label>
         <div class="group-controls">
-            <input id="deeplx-api-url" required="required" name="DeeplxApiUrl" type="text" value="<?php echo FreshRSS_Context::$user_conf->DeeplxApiUrl; ?>">
+            <input id="deeplx-api-url" name="DeeplxApiUrl" type="text" value="<?php echo FreshRSS_Context::$user_conf->DeeplxApiUrl; ?>">
+        </div>
+    </div>
+
+    <!-- LibreTranslate 设置 -->
+    <div class="form-group">
+        <label class="group-name" for="libre-api-url">LibreTranslate 服务器地址:</label>
+        <div class="group-controls">
+            <input id="libre-api-url" name="LibreApiUrl" type="text" value="<?php echo FreshRSS_Context::$user_conf->LibreApiUrl; ?>">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="group-name" for="libre-api-key">LibreTranslate API Key (可选):</label>
+        <div class="group-controls">
+            <input id="libre-api-key" name="LibreApiKey" type="text" value="<?php echo FreshRSS_Context::$user_conf->LibreApiKey; ?>">
         </div>
     </div>
 
